@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, CMake, tools
+from conans.tools import os_info, SystemPackageTool
 import os
 
 
@@ -40,8 +41,8 @@ class libuiConan(ConanFile):
                 # "libxft-dev:i386
                 # "libpng12-dev:i386
             # ]
-        installer = SystemPackageTool()
-        installer.install("libgtk-3-dev")
+            installer = SystemPackageTool()
+            installer.install("libgtk-3-dev")
             
         
         
