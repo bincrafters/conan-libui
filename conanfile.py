@@ -95,6 +95,20 @@ class libuiConan(ConanFile):
                 "uuid",
                 "windowscodecs",
             ])
+        elif(self.settings.os == "Linux"):
+            self.cpp_info.libs.extend([
+                "gtk-3",
+                "gdk-3",
+                "atk-1.0",
+                "gio-2.0",
+                "pangocairo-1.0",
+                "gdk_pixbuf-2.0",
+                "cairo-gobject",
+                "pango-1.0",
+                "cairo",
+                "gobject-2.0",
+                "glib-2.0",
+            ])
             
             
             
