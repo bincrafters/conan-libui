@@ -23,6 +23,29 @@ class libuiConan(ConanFile):
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
 
+    def system_requirements(self):
+        if os_info.linux_distro == "ubuntu":
+            # pack_names = [
+                # "libgtk-3-dev",
+                # "libgirepository-1.0-1:i386
+                # "libglib2.0-dev:i386
+                # "gir1.2-glib-2.0:i386
+                # "gir1.2-atk-1.0:i386
+                # "libatk1.0-dev:i386
+                # "libfreetype6-dev:i386
+                # "libfontconfig1-dev:i386
+                # "libcairo2-dev:i386
+                # "libgdk-pixbuf2.0-dev:i386
+                # "libpango1.0-dev:i386
+                # "libxft-dev:i386
+                # "libpng12-dev:i386
+            # ]
+        installer = SystemPackageTool()
+        installer.install("libgtk-3-dev")
+            
+        
+        
+        
     def config_options(self):
         if self.settings.os == 'Windows':
             del self.options.fPIC
