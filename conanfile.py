@@ -9,7 +9,7 @@ import os
 class libuiConan(ConanFile):
     name = "libui"
     version = "0.4.1"
-    description = "Keep it short"
+    description = "Simple and portable GUI library in C that uses the native GUI technologies of each platform it supports."
     topics = ("conan", "libui", "ui", "gui")
     url = "https://github.com/bincrafters/conan-libui"
     homepage = "https://github.com/andlabs/libui"
