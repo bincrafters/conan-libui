@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from conans import ConanFile, CMake, tools
 from conans.tools import os_info, SystemPackageTool
 import os
@@ -13,7 +10,6 @@ class libuiConan(ConanFile):
     topics = ("conan", "libui", "ui", "gui")
     url = "https://github.com/bincrafters/conan-libui"
     homepage = "https://github.com/andlabs/libui"
-    author = "Bincrafters <bincrafters@gmail.com>"
     license = "MIT"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
