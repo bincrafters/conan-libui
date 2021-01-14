@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-from conans.tools import os_info, SystemPackageTool
+from conans.tools import os_info
 import os
 
 
@@ -12,31 +12,12 @@ class libuiConan(ConanFile):
     homepage = "https://github.com/andlabs/libui"
     license = "MIT"
     exports_sources = ["CMakeLists.txt"]
-    generators = "cmake"
+    generators = "cmake", "pkg_config"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
-
-    def system_requirements(self):
-        if tools.os_info.with_apt:
-            packages = [
-                "libgtk-3-dev",
-                "libatk1.0-dev",
-                "libglib2.0-dev",
-                "libpango1.0-dev",
-                "libgdk-pixbuf2.0-dev",
-                "libcairo2-dev",
-                "libpango1.0-dev",
-                "libcairo2-dev"
-            ]
-            if tools.cross_building(self.settings):
-                target_arch = {"x86": "i386", "armv7": "arm", "armv7hf": "armhf"}
-                conan_arch = str(self.settings.arch)
-                packages = ["%s:%s" % (package, target_arch[conan_arch]) for package in packages]
-            installer = SystemPackageTool()
-            installer.install(" ".join(packages))
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -49,6 +30,9 @@ class libuiConan(ConanFile):
             sha256="f51a9e20e9f9a4c0bce1571ee37f203f42de33e3ac7359a6aac87a54798e8716")
         extracted_dir = self.name + "-" + url_version
         os.rename(extracted_dir, self._source_subfolder)
+
+    def requirements(self):
+        self.requires("gtk/3.24.24")
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -70,35 +54,21 @@ class libuiConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        if(self.settings.os == "Windows"):
-            self.cpp_info.libs.extend([
-                "user32",
-                "kernel32",
-                "gdi32",
-                "comctl32",
-                "msimg32",
-                "comdlg32",
-                "d2d1",
-                "dwrite",
-                "ole32",
-                "oleaut32",
-                "oleacc",
-                "uuid",
-                "windowscodecs",
-            ])
-        elif(self.settings.os == "Linux"):
-            self.cpp_info.libs.extend([
-                "gtk-3",
-                "gdk-3",
-                "atk-1.0",
-                "gio-2.0",
-                "pangocairo-1.0",
-                "gdk_pixbuf-2.0",
-                "cairo-gobject",
-                "pango-1.0",
-                "cairo",
-                "gobject-2.0",
-                "glib-2.0",
-            ])
-
-
+        if self.settings.os == "Windows":
+            self.cpp_info.libs.extend(
+                [
+                    "user32",
+                    "kernel32",
+                    "gdi32",
+                    "comctl32",
+                    "msimg32",
+                    "comdlg32",
+                    "d2d1",
+                    "dwrite",
+                    "ole32",
+                    "oleaut32",
+                    "oleacc",
+                    "uuid",
+                    "windowscodecs",
+                ]
+            )
